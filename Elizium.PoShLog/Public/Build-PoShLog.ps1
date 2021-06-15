@@ -145,7 +145,7 @@ function Build-PoShLog {
     [string]$From,
 
     [Parameter(ParameterSetName = 'CreateLog', Position = 3)]
-    [Alias('u')]
+    [Alias('un')]
     [string]$Until,
 
     [Parameter(ParameterSetName = 'CreateLogUnreleased')]
