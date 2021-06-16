@@ -17,12 +17,11 @@ The module can be installed using the standard **install-module** command:
 
 > PS> install-module -Name Elizium.PoShLog
 
-One of the main rationale's for the development of :scroll: __Build-PoShLog__ (*chog*) was in recognition of the fact that a repo's commit history may be sub-optimal perhaps not conforming to the guidelines set out in sites like [Conventional Commits](https://www.conventionalcommits.org) and [Keep A Change Log](https://keepachangelog.com). *Build-PoShLog* was built to be flexible and allow for a wide variety of customisation options defined in json config file. Most of the options are cosmetic with a few that define the structure. Also, the user can keep the default regular expressions (which conform to keep-a-changelog). One of the properties of a good change log are that commits should be grouped together based upon change type/scope/commit-type/breaking changes. This change log implementation performs groupings based on all of these
-categories. The quality of the generated changelog depends heavily on the quality of the commit messages in the repo.
+One of the main rationale's for the development of :scroll: __Build-PoShLog__ (*plog*) was in recognition of the fact that a repo's commit history may be sub-optimal perhaps not conforming to the guidelines set out in sites like [Conventional Commits](https://www.conventionalcommits.org) and [Keep A Change Log](https://keepachangelog.com). *Build-PoShLog* was built to be flexible and allow for a wide variety of customisation options defined in a json config file. Most of the options are cosmetic with a few that define the structure. Also, the user can keep the default regular expressions (which conform to keep-a-changelog) or adjust to suit the needs of the repo. One of the properties of a good change log are that commits should be grouped together based upon change type/scope/commit-type/breaking changes. This change log implementation performs groupings based on all of these categories. The quality of the generated changelog depends heavily on the quality of the commit messages in the repo.
 
 The following is a list of the main aims of *Build-PoShLog* command:
 
-1. Grouping commits by scope/type/change/breaking. These items are represented in the regular expressions defined in the options config
+1. Grouping commits by scope/type/change/breaking-status. These items are represented in the regular expressions defined in the options config
 
 2. Filtering commits via 'Include' and 'Exclude' regular expressions
 
@@ -42,7 +41,7 @@ First, in a command line, the user should navigate to the repo for which the cha
 
 > Build-PoShLog -name 'Alpha' -eject -emoji
 
-In the above, _Alpha_ is the name of a pre-defined config (_Elizium_ and _Zen_ are both available too). the *-emoji* switch is optional, but indicates that the ejected config will contain emojis. Running this eject, will create a folder under the root of the repo *'.poshlog'* and inside it will be the config just ejected, in this case ___Alpha-emoji-changelog.options.json___ and a template markdown file ___TEMPLATE. md___
+In the above, _Alpha_ is the name of a pre-defined config (_Elizium_ and _Zen_ are both available too). The *-emoji* switch is optional, but indicates that the ejected config will contain emojis. Running this eject, will create a folder under the root of the repo *'.poshlog'* and inside it will be the config just ejected, in this case ___Alpha-emoji-changelog.options.json___ and a template markdown file ___TEMPLATE. md___
 
 ### (2) __edit options config__
 
@@ -75,10 +74,9 @@ needs. There are a few pre-defined configs from which to choose, that customises
 appearance of the generated change log. Most of the options are cosmetic with a few
 that define the structure.
 
-Once a ChangeLog has been generated, the user can if they want, just use the generated output as is. However, this is not the intention behind this command. Generating output, is just the first step in creating a useful change log meaning extra curation is required of the user to ensure the items marked as Squashed for example, are cleaned up (the end user is probably not interested in whether an item is squashed or not).
+Once a ChangeLog has been generated, the user can if they want, just use the generated output as is. However, this is not the intention behind this command. Generating output, is just the first step in creating a useful change log meaning extra curation is required of the user to ensure the items marked as _SQUASHED_ for example, are cleaned up (the end user is probably not interested in whether an item is squashed or not).
 
-  An alternative way to change the appearance of the change log is the use of emojis
-which can really help in identifying items generated in the log and the nature of
+  An alternative way to change the appearance of the change log is the use of [emojis](https://emojis.ninja/) which can really help in identifying items generated in the log and the nature of
 that change. The user is welcome to change the emojis used by updating the options
 file.
 
@@ -103,7 +101,7 @@ The generated ChangeLog markdown content is created inside a subdirectory ('.pos
 
 :warning: The name of a git tag is not significant when specifying a range. Rather, the date that is associated with the tag is the important entity. It would be easy to assume that tag '3.0.0' comes after a tag '2.0.0', but this is not based on the content of the tag label, it's the underlying date that matters. It just so happens, that '3.0.0' should come after '2.0.0', providing '2.0.0' was released before '3.0.0'. If a tag  contains extra info such as '3.0.0-beta', or perhaps it was defined as 'beta-3.0.0', it now becomes clear that the content of the tag label is not the important characteristic.
 
-:pick: It was envisaged that the user would run the _Build-PoShLog_ command initially for the entire commit history. Refine the initial output, then check-in. Then on subsequent releases, the command can then be run just for unreleased commits (using the _Unreleased_ switch). If the repo is a large one, then it would probably be unwise to generate a build log for the entire history in 1 go; in this scenario, the user can be selective by specifying a range using _From_ and _Until_ tags.
+:pick: It was envisaged that the user would run the _Build-PoShLog_ command initially. Refine the initial output, then check-in. Then on subsequent releases, the command can then be run just for unreleased commits (using the _Unreleased_ switch). If the repo is a large one, then it would probably be unwise to generate a build log for the entire history in 1 go; in this scenario, the user can be selective by specifying a range using _From_ and _Until_ tags.
 
 ### Build-PoShLog parameters
 
