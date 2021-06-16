@@ -5,7 +5,7 @@ $moduleName = Split-Path $moduleRoot -Leaf;
 
 Describe "General project validation: $moduleName" {
   BeforeAll {
-    Get-Module Elizium.PoShLog | Remove-Module
+    Get-Module Elizium.PoShLog | Remove-Module -Force;
     Import-Module ./Output/Elizium.PoShLog/Elizium.PoShLog.psm1 `
       -ErrorAction 'stop' -DisableNameChecking;
   }

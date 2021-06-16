@@ -2,9 +2,9 @@ using module Elizium.Klassy;
 
 Describe 'Build-PoShLog' -Tag 'plog' {
   BeforeAll {
-    Get-Module Elizium.PoShLog | Remove-Module
+    Get-Module Elizium.PoShLog | Remove-Module -Force;
     Import-Module .\Output\Elizium.PoShLog\Elizium.PoShLog.psm1 `
-      -ErrorAction 'stop' -DisableNameChecking
+      -ErrorAction 'stop' -DisableNameChecking;
 
     [string]$script:ROOT = 'root';
     [string]$script:DIRECTORY = [PoShLogProfile]::DIRECTORY;
