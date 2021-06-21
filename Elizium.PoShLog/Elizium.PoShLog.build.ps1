@@ -1,4 +1,4 @@
-﻿# POSHLOG
+# VERSION 0.0.1
 using namespace System.Text.RegularExpressions;
 
 task . Clean, Build, Tests, Stats
@@ -32,8 +32,8 @@ $script:Properties = [PSCustomObject]@{
   OutPsmPath          = "$($Core.ModuleOut).psm1";
   OutPsdPath          = "$($Core.ModuleOut).psd1";
   ModuleOutPath       = $(Join-Path -Path $PSScriptRoot -ChildPath "Output" -AdditionalChildPath $(
-    "$($script:ModuleName)"
-  ));
+      "$($script:ModuleName)"
+    ));
 
   FinalDirectory      = 'Final';
   PublicFolder        = 'Public';
@@ -60,30 +60,41 @@ if (Test-Path -Path $script:Properties.AdditionExportsPath) {
 function Get-AdditionalFnExports {
   [string []]$additional = @()
 
-  if ($AdditionalFnExports -and ($AdditionalFnExports -is [array])) {
-    $additional = $AdditionalFnExports;
-  }
+  try {
+    if ($global:AdditionalFnExports -and ($global:AdditionalFnExports -is [array])) {
+      $additional = $global:AdditionalFnExports;
+    }
 
-  Write-Verbose "---> Get-AdditionalFnExports: $($additional -join ', ')";
+    Write-Verbose "---> Get-AdditionalFnExports: $($additional -join ', ')";
+  }
+  catch {
+    Write-Verbose "===> Get-AdditionalFnExports: no 'AdditionalFnExports' found";
+  }
 
   return $additional;
 }
 
 function Get-AdditionalAliasExports {
-  [string []]$additionalAliases = @()
+  [string []]$additionalAliases = @();
 
-  if ($AdditionalAliasExports -and ($AdditionalAliasExports -is [array])) {
-    $additionalAliases = $AdditionalAliasExports;
+  try {
+    if ($global:AdditionalAliasExports -and ($global:AdditionalAliasExports -is [array])) {
+      $additionalAliases = $global:AdditionalAliasExports;
+    }
+    Write-Verbose "===> Get-AdditionalAliasExports: $($additionalAliases -join ', ')";
   }
-
-  Write-Verbose "===> Get-AdditionalAliasExports: $($additionalAliases -join ', ')";
+  catch {
+    Write-Verbose "===> Get-AdditionalAliasExports: no 'AdditionalAliasExports' found";
+  }
 
   return $additionalAliases;
 }
 
 function Get-FunctionExportList {
-  [string[]]$fnExports = (Get-ChildItem -Path $script:Properties.PublicFolder -Recurse | Where-Object { $_.Name -like '*-*' } |
-    Select-Object -ExpandProperty BaseName);
+  [string[]]$fnExports = $(
+    Get-ChildItem -Path $script:Properties.PublicFolder -Recurse | Where-Object {
+      $_.Name -like '*-*' } | Select-Object -ExpandProperty BaseName
+  );
 
   $fnExports += Get-AdditionalFnExports;
   return $fnExports;
