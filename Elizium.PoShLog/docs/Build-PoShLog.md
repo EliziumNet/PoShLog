@@ -95,7 +95,7 @@ To see a detailed explanation of the options config, the user should consult
 Build-PoShLog -name 'Alpha' -Eject -Emoji
 ```
 
-Eject 'Alpha' emojis options config into the repo under <root>/PoShLog/
+Eject 'Alpha' emojis options config into the repo under \<root>/PoShLog/
 as "Alpha-emoji-poshlog.options.json"
 
 ### Example 2
@@ -104,7 +104,7 @@ as "Alpha-emoji-poshlog.options.json"
 Build-PoShLog -name 'Zen' -Eject
 ```
 
-Eject 'Zen' options config without emojis into the repo under <root>/PoShLog/
+Eject 'Zen' options config without emojis into the repo under \<root>/PoShLog/
 as "Zen-poshlog.options.json"
 
 ### Example 3
@@ -299,6 +299,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Elizium.PoShLog](https://github.com/EliziumNet/PoShLog)<br>
-[Elizium.Loopz](https://github.com/EliziumNet/Loopz)<br>
-[Elizium.Krayola](https://github.com/EliziumNet/Krayola)<br>
+[Elizium.PoShLog](https://github.com/EliziumNet/PoShLog)
+
+[Elizium.Loopz](https://github.com/EliziumNet/Loopz)
+
+[Elizium.Krayola](https://github.com/EliziumNet/Krayola)
