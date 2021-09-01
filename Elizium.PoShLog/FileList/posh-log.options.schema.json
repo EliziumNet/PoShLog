@@ -1,0 +1,304 @@
+{
+  "$id": "https://github.com/EliziumNet/PoShLog/blob/master/Elizium.PoShLog/FileList/posh-log.options.schema.json",
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "title": "Loopz PoSh Log Options json file schema",
+  "version": "1.0.0",
+  "definitions": {},
+
+  "type": "object",
+  "required": ["Snippet", "Selection", "SourceControl", "Output"],
+  "properties": {
+    "Snippet": {
+      "type": "object",
+
+      "required": ["Prefix"],
+      "properties": {
+        "Prefix": {
+          "title": "Documents the prefix characters for each type of statement snippet",
+          "type": "object",
+
+          "required": [
+            "Conditional", "Literal", "Lookup", "NamedGroupRef", "Statement", "Variable"
+          ],
+          "properties": {
+            "Conditional" : {
+              "title": "Generate content depending on a fixed condition",
+              "type": "string",
+              "pattern": "^\\?$"
+            },
+            "Literal" : {
+              "title": "Generate fixed literal content",
+              "type": "string",
+              "pattern": "^!$"
+            },
+            "Lookup" : {
+              "title": "Lookup a variable in one of the pre-defined look up tables",
+              "type": "string",
+              "pattern": "^&$"
+            },
+            "NamedGroupRef" : {
+              "title": "Insert contents of an Include regex named group reference",
+              "type": "string",
+              "pattern": "^\\^$"
+            },
+            "Statement" : { "type": "string" },
+            "Variable" : { "type": "string" }
+          }
+        }
+      }
+    },
+    "Selection": {
+      "title": "Commit selection settings",
+      "type": "object",
+
+      "required": ["Subject", "Tags"],
+      "properties": {
+        "SquashBy": {
+          "title": "Regular expression that defines how to squash commits",
+          "type": "string"
+        },
+        "Last": {
+          "title": "Indicates which commit that has been squashed together is selected",
+          "type": "boolean"
+        },
+        "IncludeMissingIssue": {
+          "title": "Include commits that are missing the issue number",
+          "type": "boolean"
+        },
+        "Subject": {
+          "title": "Represents the subject/header line of the commit",
+          "type": "object",
+
+          "required": ["Include", "Exclude"],
+          "properties": {
+            "Include": {
+              "title": "Regular expressions to specify which commits are included",
+              "type": "array"
+            },
+            "Exclude": {
+              "title": "Regular expressions to specify which commits are excluded",
+              "type": "array"
+            },
+            "Change": {
+              "title": "Regular expression to detect the commit's change type (applied to subject body)",
+              "type": "string"
+            }
+          }
+        },
+        "Tags": {
+          "type": "object",
+
+          "required": [],
+          "properties": {
+            "From": {
+              "title": "Include releases after this git tag",
+              "type": "string"
+            },
+            "Until": {
+              "title": "Include releases up until this git tag",
+              "type": "string"
+            },
+            "Unreleased": {
+              "title": "Mutually exclusive with From/Until. Include unreleased commits only",
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "SourceControl": {
+      "title": "git related settings",
+      "type": "object",
+
+      "required": ["AvatarSize", "CommitIdSize"],
+      "properties": {
+        "Service": { "type": "string" },
+        "HostUrl": { "type": "string" },
+        "AvatarSize": {
+          "title": "Size of the author's avatar to retrieve",
+          "type": "string"
+        },
+        "CommitIdSize": {
+          "title": "Size of the leading portion of the commit id to use in the output",
+          "type": "number",
+          "minimum": 7,
+          "maximum": 40
+        }
+      }
+    },
+    "Output": {
+      "title": "Controls generated content",
+      "type": "object",
+
+      "required": [
+        "Headings", "GroupBy", "LookUp", "Literals", "Statements",
+        "Warnings", "Base", "Template", "Sections"
+      ],
+      "properties": {
+        "Headings": {
+          "title": "Markdown header settings",
+          "type": "object",
+
+          "required": ["H2", "Dirty"],
+          "properties": {
+            "H2": {
+              "type": "string"
+            },
+            "H3": {
+              "type": "string",
+              "pattern": "\\*\\{\\$\\}"
+            },
+            "H4": {
+              "type": "string",
+              "pattern": "\\*\\{\\$\\}"
+            },
+            "H5": {
+              "type": "string",
+              "pattern": "\\*\\{\\$\\}"
+            },
+            "H6": {
+              "type": "string",
+              "pattern": "\\*\\{\\$\\}"
+            },
+            "Dirty": { "type": "string" }
+          }
+        },
+        "Sections": {
+          "title": "Pre-defined markdown sections",
+          "type": "object",
+
+          "required": ["Release"],
+          "properties": {
+            "Release": {
+              "title": "Release content",
+              "type": "object",
+
+              "required": ["Highlights", "HighlightContent"],
+              "properties": {
+                "Highlights": {
+                  "title": "The Highlights title line statement",
+                  "type": "string"
+                },
+                "HighlightContent" : {
+                  "title": "Multi-line highlights content",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "GroupBy": { "type": "string" },
+        "Lookup": {
+          "title": "Lookup tables",
+          "type": "object",
+
+          "required": ["Authors", "BreakingStatus", "ChangeTypes", "Scopes", "Types"],
+          "properties": {
+            "Authors": {
+              "title": "Project collaborators (typically used to assign an emoji to each author)",
+              "type": "object",
+
+              "required" : ["?"]
+            },
+            "BreakingStatus": {
+              "title": "Defines content to indicate breaking status",
+              "type": "object",
+
+              "patternProperties": {
+                "^(non-)?breaking$": { "type": "string"}
+              }
+            },
+            "ChangeTypes": {
+              "title": "Commit change types (usually Add/Change/Remove etc)",
+              "type": "object",
+
+              "required" : ["?"],
+              "patternProperties": {
+                "^\\?|[\\w\\-]+$": {
+                  "type": "string",
+                  "pattern": "(?:isa:)?[\\w\\-]+"
+                }
+              }
+            },
+            "Scopes": {
+              "title": "Valid set of scopes defined for the repo",
+              "type": "object",
+
+              "required" : ["?"],
+              "patternProperties": {
+                "^\\?|[\\w\\-]+$": {
+                  "type": "string",
+                  "pattern": "(?:isa:)?[^#]+"
+                }
+              }
+            },
+            "Types": {
+              "title": "Standard commit types (should match the scope choices in Include regular expression(s), usually fix/feat/ref/docs/test etc)",
+              "type": "object",
+
+              "required" : ["?"],
+              "patternProperties": {
+                "^\\?|[\\w\\-]+$": {
+                  "type": "string",
+                  "pattern": "(?:isa:)?[\\w\\-]+"
+                }
+              }
+            }
+          }
+        },
+        "Literals": {
+          "title": "Static content that can be referenced by a statement or is used internally",
+          "type": "object",
+
+          "required": ["Broken", "BucketEnd", "DateFormat", "Dirty", "Uncategorised"],
+          "properties": {
+            "Broken": { "type": "string" },
+            "BucketEnd": { "type": "string" },
+            "DateFormat": { "type": "string" },
+            "Dirty": { "type": "string" },
+            "Uncategorised": { "type": "string" }
+          }
+        },
+        "Statements": {
+          "title": "Statements that can be defined by the user",
+          "type": "object",
+
+          "required": ["Break", "Change", "Scope", "ActiveScope", "Type", "Commit", "DirtyCommit", "Ungrouped"],
+          "properties": {
+            "Break": { "type": "string" },
+            "Change": { "type": "string" },
+            "Scope": { "type": "string" },
+            "ActiveScope": { "type": "string" },
+            "Type": { "type": "string" },
+            "Commit": { "type": "string" },
+            "DirtyCommit": { "type": "string" }
+          }
+        },
+        "Warnings": {
+          "title": "Markdown warnings settings embedded in the Change Log",
+          "type": "object",
+
+          "required": ["Disable"],
+          "properties": {
+            "Disable": {
+              "title": "Markdown warnings to disable",
+              "type": "object",
+
+              "patternProperties": {
+                "^MD\\d{3}$": { "type": "string"}
+              },
+              "required": []
+            }
+          }
+        },
+        "Base": {
+          "title": "The base part of the filename for the options config file",
+          "type": "string"
+        },
+        "Template": {
+          "title": "Populated from the generated TEMPLATE.md file"
+        }
+      }
+    }
+  }
+}
