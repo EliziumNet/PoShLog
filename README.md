@@ -61,7 +61,7 @@ Repeat this for all valid scopes in the repo.
 
 + modify statements (at ___./Output/Statements___): This is an optional step, but doing so can aid the users understanding of how the tool works. The statements simply specify literal content and/or refer to other statements. For each commit entry in the change log, the entry point is the 'Commit' statement at ___./Output/Statements/Commit___. For each heading, the entry points are the those statements defined in the headings at ___./Output/Headings/H?___. So these statements should be present and the ones that they in turn refer to. New statements can be defined, see [Statement](#snippet.statement) for more details.
 
-:warning: *A cautionary note about editing json config*: When *Build-PoShLog* is run, it validates the options via a [json schema](https://github.com/EliziumNet/Klassy/blob/master/Elizium.Klassy/FileList/posh-log.options.schema.json) and this validation process is case sensitive. So be careful when modifying json elements as a case mismatch can result in hard to resolve errors.
+:warning: *A cautionary note about editing json config*: When *Build-PoShLog* is run, it validates the options via a [json schema](https://github.com/EliziumNet/PoShLog/blob/master/Elizium.PoShLog/FileList/posh-log.options.schema.json) and this validation process is case sensitive. So be careful when modifying json elements as a case mismatch can result in hard to resolve errors.
 
 ### (3) __edit the TEMPLATE. md file__
 
@@ -177,7 +177,7 @@ Build a change log that contains unreleased commits only.
 
 ## Options Config
 
-The options config is a json file (the json schema can be found [here](https://github.com/EliziumNet/Klassy/blob/master/Elizium.Klassy/FileList/posh-log.options.schema.json)), which needs to first be ejected and then modified to suit the needs of the repo. The following table shows the main sections of the options config:
+The options config is a json file (the json schema can be found [here](https://github.com/EliziumNet/PoShLog/blob/master/Elizium.PoShLog/FileList/posh-log.options.schema.json)), which needs to first be ejected and then modified to suit the needs of the repo. The following table shows the main sections of the options config:
 
 | Options group                               | DESCRIPTION
 |---------------------------------------------|---------------------------------------------------------

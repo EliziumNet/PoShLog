@@ -1,6 +1,6 @@
-using module Elizium.Klassy;
+using module "..\..\Output\Elizium.PoShLog\Elizium.PoShLog.psm1"
 
-Describe 'Build-PoShLog' -Tag 'plog' {
+Describe 'Build-PoShLog' {
   BeforeAll {
     Get-Module Elizium.PoShLog | Remove-Module -Force;
     Import-Module .\Output\Elizium.PoShLog\Elizium.PoShLog.psm1 `
@@ -22,7 +22,8 @@ Describe 'Build-PoShLog' -Tag 'plog' {
             Root          = $_rootPath;
           }
 
-          [PoShLogOptionsManager]$manager = New-PoShLogOptionsManager -OptionsInfo $optionsInfo;
+          # [PoShLogOptionsManager]
+          [object]$manager = New-PoShLogOptionsManager -OptionsInfo $optionsInfo;
           [boolean]$withEmoji = $true;
 
           [PSCustomObject]$options = $manager.FindOptions('Elizium', $withEmoji);
@@ -35,7 +36,7 @@ Describe 'Build-PoShLog' -Tag 'plog' {
   Describe 'CreateLog' {
     Context 'given: Emoji' {
       Context 'and: options file exists' {
-        It 'should: build change log' -Tag 'Current' {
+        It 'should: build change log' {
           [PSCustomObject]$optionsInfo = [PSCustomObject]@{
             Base          = '-poshlog.options';
             DirectoryName = $DIRECTORY;
@@ -50,11 +51,14 @@ Describe 'Build-PoShLog' -Tag 'plog' {
           [string]$destinationPath = Join-Path -Path $directoryPath -ChildPath $optionsFileName;
           Copy-Item -LiteralPath $testPath -Destination $destinationPath;
 
-          [PoShLogOptionsManager]$manager = New-PoShLogOptionsManager -OptionsInfo $optionsInfo;
+          # [PoShLogOptionsManager]
+          [object]$manager = New-PoShLogOptionsManager -OptionsInfo $optionsInfo;
           [boolean]$withEmoji = $true;
 
           [PSCustomObject]$options = $manager.FindOptions('Test', $withEmoji);
-          [PoShLog]$changeLog = New-PoShLog -Options $options;
+
+          # [PoShLog]
+          [object]$changeLog = New-PoShLog -Options $options;
           [string]$outputPath = Join-Path -Path $directoryPath -ChildPath 'ChangeLog.test-emojis.md';
           [string]$content = $changeLog.Build();
           $changeLog.Save($content, $outputPath);
@@ -80,7 +84,7 @@ Describe 'Build-PoShLog' -Tag 'plog' {
 
     Context 'given: Eject Emoji options' {
       Context 'and: requested options do not exist' {
-        It 'should: create new options config' -Tag 'Current' {
+        It 'should: create new options config' {
           Build-PoShLog -Name 'Elizium' -Emoji -Eject -Test;
           Test-Path -Path $_optionsFileName | Should -BeTrue;
 
