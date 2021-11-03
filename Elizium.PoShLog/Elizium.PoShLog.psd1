@@ -54,7 +54,7 @@
   RequiredModules   = @(
     @{
       ModuleName    = 'Elizium.Krayola';
-      ModuleVersion = '1.0.3';
+      ModuleVersion = '3.0.0';
       Guid          = 'cc13fedc-6dea-4573-b600-d26c9f77e6ac';
     }
   )
